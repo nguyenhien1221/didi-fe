@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { LocaleProvider, useLocale } from "@/features/i18n/locale-context";
+import { LocaleProvider, useLocale } from "@/i18n/locale-context";
 import {
   findTripSuggestionById,
   formatTripDuration,
@@ -66,7 +66,10 @@ const TripDetailContent = ({ tripId }: TripDetailPageProps) => {
     <div className="mx-auto flex min-h-dvh max-w-lg flex-col gap-6 px-6 py-10">
       <Link
         href="/"
-        className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-fit")}
+        className={cn(
+          buttonVariants({ variant: "outline", size: "sm" }),
+          "w-fit",
+        )}
       >
         {t.tripBackHome}
       </Link>

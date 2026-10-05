@@ -1,7 +1,7 @@
 "use client";
 
-import { LanguageSwitcher } from "@/features/i18n/language-switcher";
-import { useLocale } from "@/features/i18n/locale-context";
+import { LanguageSwitcher } from "@/i18n/language-switcher";
+import { useLocale } from "@/i18n/locale-context";
 
 export const HomeHeader = () => {
   const { t } = useLocale();

@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { LocaleProvider, useLocale } from "@/features/i18n/locale-context";
+import { LocaleProvider, useLocale } from "@/i18n/locale-context";
 import { VietnamMap } from "@/features/map/vietnam-map";
 import provincesCollection from "@/features/map/data/vietnam-provinces.json";
 import type {
@@ -88,9 +88,7 @@ const HomePageContent = () => {
           />
         </div>
         {hasTripPanel && selectedTrip ? (
-          <aside
-            className="relative z-10 h-[min(20rem,42vh)] w-full shrink-0 overflow-hidden bg-background p-3 md:h-full md:w-80 md:p-4 lg:w-96"
-          >
+          <aside className="relative z-10 h-[min(20rem,42vh)] w-full shrink-0 overflow-hidden bg-background p-3 md:h-full md:w-80 md:p-4 lg:w-96">
             <TripDetailCard
               key={selectedTrip.id}
               locale={locale}

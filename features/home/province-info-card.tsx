@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "cn";
-import { getMessages } from "@/features/i18n/messages";
+import { getMessages } from "@/i18n/messages";
 import { getProvinceDisplayName } from "@/features/map/map-geo";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
@@ -85,10 +85,10 @@ export const ProvinceInfoCard = ({
             fill
             sizes="(max-width: 768px) 100vw, 448px"
             className="object-cover"
-          />
+          />``
         </motion.div>
         <CardHeader className="shrink-0 gap-0 border-t border-border/60 pb-0">
-          <CardTitle className="pb-3 text-lg">{name}</CardTitle>
+          <CardTitle className="py-3 text-lg">{name}</CardTitle>
           <nav
             className="-mx-(--card-spacing) flex border-b border-border/60 px-(--card-spacing)"
             aria-label={t.provinceTabInfo}

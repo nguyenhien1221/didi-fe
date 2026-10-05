@@ -6,7 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -23,21 +23,59 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 const STORAGE_KEY = "didi-locale";
 
+const localeListeners = new Set<() => void>();
+
+function subscribeToLocale(onStoreChange: () => void) {
+  localeListeners.add(onStoreChange);
+
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY) {
+      onStoreChange();
+    }
+  };
+  window.addEventListener("storage", onStorage);
+
+  return () => {
+    localeListeners.delete(onStoreChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function readStoredLocale(): Locale {
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  if (stored === "en" || stored === "vi") {
+    return stored;
+  }
+  return "vi";
+}
+
+function getLocaleSnapshot(): Locale {
+  return readStoredLocale();
+}
+
+function getLocaleServerSnapshot(): Locale {
+  return "vi";
+}
+
+function notifyLocaleStoreChange() {
+  localeListeners.forEach((listener) => listener());
+}
+
 export const LocaleProvider = ({ children }: { children: ReactNode }) => {
-  const [locale, setLocaleState] = useState<Locale>("vi");
+  const locale = useSyncExternalStore(
+    subscribeToLocale,
+    getLocaleSnapshot,
+    getLocaleServerSnapshot,
+  );
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "en" || stored === "vi") {
-      setLocaleState(stored);
-      document.documentElement.lang = stored;
-    }
-  }, []);
+    document.documentElement.lang = locale;
+  }, [locale]);
 
   const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
     window.localStorage.setItem(STORAGE_KEY, next);
     document.documentElement.lang = next;
+    notifyLocaleStoreChange();
   }, []);
 
   const value = useMemo(
@@ -46,7 +84,7 @@ export const LocaleProvider = ({ children }: { children: ReactNode }) => {
       setLocale,
       t: getMessages(locale),
     }),
-    [locale]
+    [locale],
   );
 
   return (

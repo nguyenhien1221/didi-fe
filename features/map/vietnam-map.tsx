@@ -4,7 +4,7 @@ import { useCallback, useMemo } from "react";
 import type { FeatureCollection } from "geojson";
 import { ZoomOut } from "lucide-react";
 
-import { getMessages } from "@/features/i18n/messages";
+import { getMessages } from "@/i18n/messages";
 import archipelagoList from "@/features/map/data/vietnam-archipelagos.json";
 import outlineFeature from "@/features/map/data/vietnam-outline.json";
 import provincesCollection from "@/features/map/data/vietnam-provinces.json";
@@ -96,7 +96,7 @@ export const VietnamMap = ({
       observer.observe(node);
       return () => observer.disconnect();
     },
-    [setSize]
+    [setSize],
   );
 
   const provincePaths = useMemo(() => {
@@ -145,10 +145,7 @@ export const VietnamMap = ({
   };
 
   const selectedName = selectedProvinceId
-    ? getProvinceDisplayName(
-        featureById.get(selectedProvinceId)!,
-        locale
-      )
+    ? getProvinceDisplayName(featureById.get(selectedProvinceId)!, locale)
     : null;
 
   const showCapital =
@@ -187,11 +184,7 @@ export const VietnamMap = ({
       {size.width > 0 && projection ? (
         <svg
           role="img"
-          aria-label={
-            locale === "vi"
-              ? "Bản đồ Việt Nam"
-              : "Map of Vietnam"
-          }
+          aria-label={locale === "vi" ? "Bản đồ Việt Nam" : "Map of Vietnam"}
           width={size.width}
           height={size.height}
           className="block h-full w-full touch-none overflow-visible"
@@ -215,7 +208,7 @@ export const VietnamMap = ({
             <g
               className={cn(
                 "transition-opacity duration-500",
-                !isCountryView && "opacity-40"
+                !isCountryView && "opacity-40",
               )}
             >
               <path
@@ -264,7 +257,7 @@ export const VietnamMap = ({
                 >
                   <title>{path.name}</title>
                 </path>
-              )
+              ),
             )}
             {selectedPath ? (
               <path

@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getMessages } from "@/features/i18n/messages";
+import { getMessages } from "@/i18n/messages";
 import type { Locale } from "@/features/map/types";
 
 import { provinceCardEntranceTransition } from "./constants";
@@ -43,7 +43,7 @@ export const TripDetailCard = ({
       transition={provinceCardEntranceTransition}
     >
       <Card className="flex h-full min-h-0 flex-col gap-0 overflow-hidden bg-card py-0 ring-border/60">
-        <CardHeader className="shrink-0 gap-1 border-b border-border/60 pb-3">
+        <CardHeader className="shrink-0 gap-1 border-b border-border/60 pb-3 pt-4">
           <div className="flex items-start gap-2">
             <div className="min-w-0 flex-1 space-y-1">
               <CardTitle className="text-base leading-snug">{title}</CardTitle>
